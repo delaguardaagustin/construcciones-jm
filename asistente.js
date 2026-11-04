@@ -24,7 +24,7 @@
   root.setAttribute('aria-label', 'Asistente de ' + C.negocio);
   root.innerHTML =
     '<header class="asis-head"><div><strong>' + C.negocio + '</strong>' +
-    '<span>Asistente virtual · las horas se confirman ' + (LLAMADA ? 'llamando' : ('con ' + C.persona + ' por WhatsApp')) + '</span>' +
+    '<span>Asistente virtual · ' + (C.confirma || 'las horas se confirman') + ' ' + (LLAMADA ? 'llamando' : ('con ' + C.persona + ' por WhatsApp')) + '</span>' +
     '<a class="asis-direct" href="' + wa('Hola ' + C.persona + ', vi tu página web.') + '"' + (LLAMADA ? '' : ' target="_blank" rel="noopener"') + '>' + (LLAMADA ? 'Llamar ahora' : 'Ir directo a WhatsApp') + '</a></div>' +
     '<button type="button" class="asis-x" aria-label="Cerrar asistente"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></header>' +
     '<div class="asis-log" aria-live="polite"></div>' +
@@ -142,7 +142,7 @@
   }
   function answer(f, raw) {
     say(f.r, function () {
-      chip('Quiero agendar', function () { me('Quiero agendar'); say('¿Qué servicio buscas?', menu); });
+      chip(C.agendar || 'Quiero agendar', function () { me(C.agendar || 'Quiero agendar'); say('¿Qué servicio buscas?', menu); });   // agendar y confirma: textos opcionales por negocio (ej. «Quiero cotizar» en una constructora)
       link(LLAMADA ? 'Llamar ahora' : 'Escribir por WhatsApp', wa('Hola ' + C.persona + ', vi tu página web y tengo una consulta: ' + raw));
     });
   }
